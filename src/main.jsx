@@ -26,6 +26,20 @@ function App() {
 
   const goTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' }); setMenuOpen(false) }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    const form = event.currentTarget
+    const data = new URLSearchParams(new FormData(form))
+    data.append('form-name', 'contact')
+    try {
+      await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: data.toString() })
+      form.reset()
+      setSent(true)
+    } catch {
+      setSent(false)
+    }
+  }
+
   return <div className="portfolio">
     <div className="noise" />
     <header className="topbar">
@@ -55,7 +69,7 @@ function App() {
 
       <section className="skills-section"><div className="skills-heading reveal"><span className="section-number">03</span><div><p className="mini-label">WHAT I BRING</p><h2>Built with<br /><em>intention.</em></h2></div></div><div className="skills-list">{['Web development', 'Data analysis', 'AI automation', 'Social media marketing', 'Digital marketing & SEO', 'Customer support'].map((item, index) => <div className="skill-row reveal" key={item}><span>0{index + 1}</span><h3>{item}</h3><b>↗</b><p>{['Python, Django, React.js, HTML, and CSS for useful web experiences.', 'Pandas, NumPy, cleaning, and visual thinking for clearer decisions.', 'Prompt design and AI tools that turn repetitive work into momentum.', 'Content strategy, audience thinking, and social presence built around clear communication.', 'Search-friendly content, digital campaigns, and practical online growth strategies.', 'Clear, timely communication with care for the person on the other side.'][index]}</p></div>)}</div></section>
 
-      <section className="contact-section" id="contact"><div className="contact-heading reveal"><span className="section-number">04</span><p className="mini-label">HAVE A GOOD ONE?</p><h2>Let’s make<br /><em>something</em><br />matter.</h2></div><div className="contact-lower reveal delay-1"><div><p>Have a product, a project, or a half-formed idea? Tell me what you’re building. I’ll bring a clear next step.</p><a href="mailto:idreekhan122@gmail.com">idreekhan122@gmail.com <span>↗</span></a></div><form onSubmit={(event) => { event.preventDefault(); setSent(true) }}><label>Your name<input required placeholder="Your name" /></label><label>Work email<input required type="email" placeholder="you@email.com" /></label><label>What are we making?<textarea required placeholder="A product, a website, a useful thing..." rows="2" /></label><button type="submit">{sent ? 'Message ready ✓' : 'Send inquiry ↗'}</button></form></div><footer><span>IK®</span><span className="social-links"><a href="https://www.instagram.com/im_idrees7?stkn=MWJxejRucDB3b2Nlag==" target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="https://www.facebook.com/share/1bthVv2jFq/?mibextid=wwXIfr" target="_blank" rel="noreferrer">FACEBOOK ↗</a></span><span>SWAT · PAKISTAN · 2026</span></footer></section>
+      <section className="contact-section" id="contact"><div className="contact-heading reveal"><span className="section-number">04</span><p className="mini-label">HAVE A GOOD ONE?</p><h2>Let’s make<br /><em>something</em><br />matter.</h2></div><div className="contact-lower reveal delay-1"><div><p>Have a product, a project, or a half-formed idea? Tell me what you’re building. I’ll bring a clear next step.</p><a href="mailto:idreekhan122@gmail.com">idreekhan122@gmail.com <span>↗</span></a></div><form name="contact" method="POST" data-netlify="true" onSubmit={handleSubmit}><input type="hidden" name="form-name" value="contact" /><label>Your name<input name="name" required placeholder="Your name" /></label><label>Work email<input name="email" required type="email" placeholder="you@email.com" /></label><label>What are we making?<textarea name="message" required placeholder="A product, a website, a useful thing..." rows="2" /></label><button type="submit">{sent ? 'Message sent ✓' : 'Send inquiry ↗'}</button></form></div><footer><span>IK®</span><span className="social-links"><a href="https://www.instagram.com/im_idrees7?stkn=MWJxejRucDB3b2Nlag==" target="_blank" rel="noreferrer">INSTAGRAM ↗</a><a href="https://www.facebook.com/share/1bthVv2jFq/?mibextid=wwXIfr" target="_blank" rel="noreferrer">FACEBOOK ↗</a></span><span>SWAT · PAKISTAN · 2026</span></footer></section>
     </main>
   </div>
 }
